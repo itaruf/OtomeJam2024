@@ -169,11 +169,6 @@ namespace cherrydev
             OnSentenceNodeActiveWithParameter?.Invoke(sentenceNode.GetSentenceCharacterName(), sentenceNode.GetSentenceText(),
                 sentenceNode.GetCharacterSprite());
 
-            if (sentenceNode.IsExternalFunc())
-            {
-                ExternalFunctionsHandler.CallExternalFunction(sentenceNode.GetExternalFunctionName());
-            }
-
             WriteDialogText(sentenceNode.GetSentenceText());
         }
 

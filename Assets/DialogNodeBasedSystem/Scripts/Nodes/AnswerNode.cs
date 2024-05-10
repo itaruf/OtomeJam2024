@@ -14,7 +14,7 @@ namespace cherrydev
 
         private List<string> answers = new List<string>();
 
-        public SentenceNode parentSentenceNode;
+        public List<Node> parentSentenceNode;
         public List<SentenceNode> childSentenceNodes = new List<SentenceNode>();
 
         private const float lableFieldSpace = 18f;
@@ -37,6 +37,7 @@ namespace cherrydev
 
             GenerateAnswerDataOnInitialization();
 
+            parentSentenceNode = new List<Node>();
             childSentenceNodes = new List<SentenceNode>(answersData.Count);
         }
 
@@ -173,14 +174,40 @@ namespace cherrydev
 
         public override bool AddToParentConnectedNode(Node nodeToAdd)
         {
-            if (nodeToAdd.GetType() == typeof(SentenceNode))
-            {
-                parentSentenceNode = (SentenceNode)nodeToAdd;
+            SentenceNode sentenceNodeToAdd;
 
-                return true;
+            if (nodeToAdd.GetType() == typeof(AnswerNode))
+            {
+                return false;
             }
 
-            return false;
+            if (nodeToAdd.GetType() == typeof(SentenceNode))
+            {
+                nodeToAdd = (SentenceNode)nodeToAdd;
+
+                if (nodeToAdd == this)
+                {
+                    return false;
+                }
+            }
+
+            parentSentenceNode.Add(nodeToAdd);
+
+            if (nodeToAdd.GetType() == typeof(SentenceNode))
+            {
+                sentenceNodeToAdd = (SentenceNode)nodeToAdd;
+
+                if (sentenceNodeToAdd.childNode == this)
+                {
+                    return true;
+                }
+                else
+                {
+                    parentSentenceNode.Remove(nodeToAdd);
+                }
+            }
+
+            return true;
         }
 
         public override bool AddToChildConnectedNode(Node nodeToAdd)
@@ -199,8 +226,7 @@ namespace cherrydev
             if (IsCanAddToChildConnectedNode(sentenceNodeToAdd))
             {
                 childSentenceNodes.Add(sentenceNodeToAdd);
-
-                sentenceNodeToAdd.parentNode = this;
+                sentenceNodeToAdd.parentNode.Add(this);
 
                 return true;
             }
@@ -220,11 +246,14 @@ namespace cherrydev
 
         private bool IsCanAddToChildConnectedNode(SentenceNode sentenceNodeToAdd)
         {
-            return sentenceNodeToAdd.parentNode == null 
-                && childSentenceNodes.Count < answersData.Count 
-                && sentenceNodeToAdd.childNode != this;
-        }
+            if (sentenceNodeToAdd.parentNode == null && sentenceNodeToAdd.childNode != this /*&& childSentenceNodes.Count >= answersData.Count*/)
+                return true;
 
+            if (!sentenceNodeToAdd.parentNode.Contains(this) && sentenceNodeToAdd.childNode != this/* && childSentenceNodes.Count >= answersData.Count*/)
+                return true;
+
+            return false;
+        }
 #endif
     }
 }

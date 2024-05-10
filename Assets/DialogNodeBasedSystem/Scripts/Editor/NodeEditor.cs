@@ -674,6 +674,8 @@ namespace cherrydev
             contextMenu.AddSeparator("");
             contextMenu.AddItem(new GUIContent("Select All Nodes"), false, SelectAllNodes, mousePosition);
             contextMenu.AddItem(new GUIContent("Remove Selected Nodes"), false, RemoveSelectedNodes, mousePosition);
+            contextMenu.AddSeparator("");
+            contextMenu.AddItem(new GUIContent("Reset"), false, Reset, mousePosition);
             contextMenu.ShowAsContext();
         }
 
@@ -736,6 +738,12 @@ namespace cherrydev
                 DestroyImmediate(nodeTodelete, true);
                 AssetDatabase.SaveAssets();
             }
+        }
+
+        private void Reset(object userData)
+        {
+            ClearDraggedLine();
+            Repaint();
         }
 
         /// <summary>

@@ -16,8 +16,8 @@ MonoBehaviour:
   nodeGraph: {fileID: 11400000}
   rect:
     serializedVersion: 2
-    x: 290.90906
-    y: 949.09125
+    x: 469.09076
+    y: 818.1815
     width: 190
     height: 135
   isDragging: 0
@@ -45,8 +45,8 @@ MonoBehaviour:
   nodeGraph: {fileID: 11400000}
   rect:
     serializedVersion: 2
-    x: 569.0909
-    y: 954.54584
+    x: 747.2726
+    y: 823.6361
     width: 190
     height: 135
   isDragging: 0
@@ -74,8 +74,8 @@ MonoBehaviour:
   nodeGraph: {fileID: 11400000}
   rect:
     serializedVersion: 2
-    x: 575.0647
-    y: 169.87024
+    x: 753.2464
+    y: 38.961212
     width: 190
     height: 135
   isDragging: 0
@@ -135,8 +135,8 @@ MonoBehaviour:
   nodeGraph: {fileID: 11400000}
   rect:
     serializedVersion: 2
-    x: 426.36353
-    y: 389.35065
+    x: 604.5452
+    y: 258.4416
     width: 190
     height: 135
   isDragging: 0
@@ -192,8 +192,8 @@ MonoBehaviour:
   nodeGraph: {fileID: 11400000}
   rect:
     serializedVersion: 2
-    x: 574.5455
-    y: -61.8183
+    x: 752.7272
+    y: -192.72733
     width: 190
     height: 135
   isDragging: 0
@@ -214,15 +214,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33f741ea10ebcf842a91c9b871dd032a, type: 3}
-  m_Name: New Node Graph
+  m_Name: New Node Graph 1
   m_EditorClassIdentifier: 
   nodesList:
-  - {fileID: -396916628701435289}
   - {fileID: -5277142479957657812}
   - {fileID: -2415236170423815469}
+  - {fileID: -396916628701435289}
+  - {fileID: -7487669236552120907}
   - {fileID: 7415125028608286062}
   - {fileID: -9057112416308334179}
-  - {fileID: -7487669236552120907}
   nodeToDrawLineFrom: {fileID: 0}
   linePosition: {x: 0, y: 0}
 --- !u!114 &3278734711004001508
@@ -269,8 +269,8 @@ MonoBehaviour:
   nodeGraph: {fileID: 11400000}
   rect:
     serializedVersion: 2
-    x: 418.18195
-    y: 674.5452
+    x: 596.36365
+    y: 543.6362
     width: 190
     height: 135
   isDragging: 0

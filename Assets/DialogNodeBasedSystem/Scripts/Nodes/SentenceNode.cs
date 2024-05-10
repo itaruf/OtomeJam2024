@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,12 +10,8 @@ namespace cherrydev
         [SerializeField] private Sentence sentence;
 
         [Space(10)]
-        public Node parentNode;
+        public List<Node> parentNode;
         public Node childNode;
-
-        [Space(7)]
-        [SerializeField] private bool isExternalFunc;
-        [SerializeField] private string externalFunctionName;
 
         private string externalButtonLable;
 
@@ -22,15 +19,6 @@ namespace cherrydev
         private const float textFieldWidth = 100f;
 
         private const float externalNodeHeight = 155f;
-
-        /// <summary>
-        /// Returning external function name
-        /// </summary>
-        /// <returns></returns>
-        public string GetExternalFunctionName()
-        {
-            return externalFunctionName;
-        }
 
         /// <summary>
         /// Returning sentence character name
@@ -69,15 +57,6 @@ namespace cherrydev
             return sentence.characterSprite;
         }
 
-        /// <summary>
-        /// Returns the value of a isExternalFunc boolean field
-        /// </summary>
-        /// <returns></returns>
-        public bool IsExternalFunc()
-        {
-            return isExternalFunc;
-        }
-
 #if UNITY_EDITOR
 
         /// <summary>
@@ -96,13 +75,12 @@ namespace cherrydev
             DrawCharacterNameFieldHorizontal();
             DrawSentenceTextFieldHorizontal();
             DrawCharacterSpriteHorizontal();
-            DrawExternalFunctionTextField();
 
-            if (GUILayout.Button(externalButtonLable))
+            /*if (GUILayout.Button(externalButtonLable))
             {
                 isExternalFunc = !isExternalFunc;
 
-            }
+            }*/
 
             GUILayout.EndArea();
         }
@@ -142,30 +120,6 @@ namespace cherrydev
         }
 
         /// <summary>
-        /// Draw label and text fields for external function, 
-        /// depends on IsExternalFunc boolean field
-        /// </summary>
-        private void DrawExternalFunctionTextField()
-        {
-            if (isExternalFunc)
-            {
-                externalButtonLable = "Remove external func";
-
-                EditorGUILayout.BeginHorizontal();
-                rect.height = externalNodeHeight;
-                EditorGUILayout.LabelField($"Func Name ", GUILayout.Width(lableFieldSpace));
-                externalFunctionName = EditorGUILayout.TextField(externalFunctionName,
-                    GUILayout.Width(textFieldWidth));
-                EditorGUILayout.EndHorizontal();
-            }
-            else
-            {
-                externalButtonLable = "Add external func";
-                rect.height = standartHeight;
-            }
-        }
-
-        /// <summary>
         /// Checking node size
         /// </summary>
         /// <param name="rect"></param>
@@ -178,14 +132,7 @@ namespace cherrydev
                 standartHeight = height;
             }
 
-            if (isExternalFunc)
-            {
-                rect.height = externalNodeHeight;
-            }
-            else
-            {
-                rect.height = standartHeight;
-            }
+            rect.height = standartHeight;
         }
 
         /// <summary>
@@ -245,7 +192,7 @@ namespace cherrydev
                 }
             }
 
-            parentNode = nodeToAdd;
+            parentNode.Add(nodeToAdd);
 
             if (nodeToAdd.GetType() == typeof(SentenceNode))
             {
@@ -257,7 +204,7 @@ namespace cherrydev
                 }
                 else
                 {
-                    parentNode = null;
+                    parentNode.Remove(nodeToAdd);
                 }
             }
 
