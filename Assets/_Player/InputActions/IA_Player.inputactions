@@ -1,0 +1,113 @@
+{
+    "name": "IA_Player",
+    "maps": [
+        {
+            "name": "AM_Dialogue",
+            "id": "98ed91e2-5b95-4fde-b0fa-360a3ce145a0",
+            "actions": [
+                {
+                    "name": "A_Next",
+                    "type": "Button",
+                    "id": "99278be0-8762-4132-b194-5416053f1bb2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "A_Open_BackLog",
+                    "type": "Button",
+                    "id": "8b523e05-5892-4482-9e58-53f7d7d09fbb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "A_Auto",
+                    "type": "Button",
+                    "id": "60c98dd2-e72a-4334-9143-95dce9048e2a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "87bd6a16-ee1c-4d69-b003-bfd4fe152124",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "A_Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "45791b45-931d-4cba-af23-243681a549c5",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "A_Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2fe4c08b-605e-4771-bf57-438ec11255ef",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "A_Open_BackLog",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "71cce31a-e0ab-4c1a-9622-e64c5a417ab3",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "A_Auto",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "AM_BackLog",
+            "id": "118e58f5-3d3d-4250-903d-cb62f06d1013",
+            "actions": [
+                {
+                    "name": "Close_BackLog",
+                    "type": "Button",
+                    "id": "542ae6e6-ccd5-47bd-8cb0-5a9e0820dc00",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "950d84f6-a809-4dee-8606-83dbd443f966",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Close_BackLog",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
