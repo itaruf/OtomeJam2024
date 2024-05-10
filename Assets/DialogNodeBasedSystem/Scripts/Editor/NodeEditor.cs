@@ -39,11 +39,7 @@ namespace cherrydev
         private const float zoomSpeed = 0.05f;
         private const float minZoom = 0.25f;
         private const float maxZoom = 3.0f;
-
-
-        /// <summary>
-        /// Define nodes and lable style parameters on enable
-        /// </summary>
+        
         private void OnEnable()
         {
             Selection.selectionChanged += ChangeEditorWindowOnSelection;
@@ -63,10 +59,7 @@ namespace cherrydev
             lableStyle.fontSize = lableFontSize;
             lableStyle.normal.textColor = Color.white;
         }
-
-        /// <summary>
-        /// Saving all changes and unsubscribing from events
-        /// </summary>
+        
         private void OnDisable()
         {
             Selection.selectionChanged -= ChangeEditorWindowOnSelection;
@@ -75,12 +68,6 @@ namespace cherrydev
             SaveChanges();
         }
 
-        /// <summary>
-        /// Open Node Editor Window when Node Graph asset is double clicked in the inspector
-        /// </summary>
-        /// <param name="instanceID"></param>
-        /// <param name="line"></param>
-        /// <returns></returns>
         [OnOpenAsset(0)]
         public static bool OnDoubleClickAsset(int instanceID, int line)
         {
@@ -109,10 +96,7 @@ namespace cherrydev
         {
             currentNodeGraph = nodeGraph;
         }
-
-        /// <summary>
-        /// Open Node Editor window
-        /// </summary>
+        
         [MenuItem("Dialog Node Based Editor", menuItem = "Window/Dialog Node Based Editor")]
         public static void OpenWindow()
         {
@@ -121,10 +105,7 @@ namespace cherrydev
             window.Show();
 
         }
-
-        /// <summary>
-        /// Rendering and handling GUI events
-        /// </summary>
+        
         private void OnGUI()
         {
             // Start the zoom area
@@ -146,10 +127,7 @@ namespace cherrydev
             if (GUI.changed)
                 Repaint();
         }
-
-        /// <summary>
-        /// Setting up nodes when opening the editor
-        /// </summary>
+        
         private static void SetUpNodes()
         {
             foreach (Node node in currentNodeGraph.nodesList)
@@ -167,10 +145,7 @@ namespace cherrydev
                 }
             }
         }
-
-        /// <summary>
-        /// Draw connection line when we drag it
-        /// </summary>
+        
         private void DrawDraggedLine()
         {
             if (currentNodeGraph.linePosition != Vector2.zero)
@@ -181,9 +156,6 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Draw connections in the editor window between nodes
-        /// </summary>
         private void DrawNodeConnection()
         {
             if (currentNodeGraph.nodesList == null || currentNodeGraph.nodesList.Count == 0)
@@ -226,11 +198,6 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Draw connection line from parent to child node
-        /// </summary>
-        /// <param name="parentNode"></param>
-        /// <param name="childNode"></param>
         private void DrawConnectionLine(Node parentNode, Node childNode)
         {
             Vector2 startPosition = parentNode.rect.center;
@@ -255,12 +222,6 @@ namespace cherrydev
             GUI.changed = true;
         }
 
-        /// <summary>
-        /// Draw grid background lines for node editor window
-        /// </summary>
-        /// <param name="gridSize"></param>
-        /// <param name="gridOpacity"></param>
-        /// <param name="color"></param>
         private void DrawGridBackground(float minorGridSize, float majorGridSize, float gridOpacity, Color minorColor, Color majorColor)
         {
             // Ensure the grid covers the entire window even when zoomed out by expanding the covered area
@@ -313,10 +274,7 @@ namespace cherrydev
                 Handles.DrawLine(new Vector3(startX, lineY, 0), new Vector3(endX, lineY, 0));
             }
         }
-
-        /// <summary>
-        /// Call Draw method from all existing nodes in nodes list
-        /// </summary>
+        
         private void DrawNodes()
         {
             if (currentNodeGraph.nodesList == null)
@@ -339,10 +297,6 @@ namespace cherrydev
             GUI.changed = true;
         }
 
-        /// <summary>
-        /// Process events
-        /// </summary>
-        /// <param name="currentEvent"></param>
         private void ProcessEvents(Event currentEvent)
         {
             graphDrag = Vector2.zero;
@@ -362,10 +316,6 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Process all events
-        /// </summary>
-        /// <param name="currentEvent"></param>
         private void ProcessNodeEditorEvents(Event currentEvent)
         {
             switch (currentEvent.type)
@@ -394,10 +344,6 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Process mouse down event
-        /// </summary>
-        /// <param name="currentEvent"></param>
         private void ProcessMouseDownEvent(Event currentEvent)
         {
             if (currentEvent.button == 1)
@@ -430,10 +376,6 @@ namespace cherrydev
             e.Use();
         }
 
-        /// <summary>
-        /// Process right mouse click event
-        /// </summary>
-        /// <param name="currentEvent"></param>
         private void ProcessRightMouseDownEvent(Event currentEvent)
         {
             if (GetHighlightedNode(currentEvent.mousePosition) == null)
@@ -442,30 +384,17 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Process left mouse click event
-        /// </summary>
-        /// <param name="currentEvent"></param>
         private void ProcessLeftMouseDownEvent(Event currentEvent)
         {
             ProcessNodeSelection(currentEvent.mousePosition);
         }
 
-        /// <summary>
-        /// Process scroll wheel down event
-        /// </summary>
-        /// <param name="currentEvent"></param>
-        /// <exception cref="NotImplementedException"></exception>
         private void ProcessScrollWheelDownEvent(Event currentEvent)
         {
             mouseScrollClickPosition = currentEvent.mousePosition;
             isScrollWheelDragging = true;
         }
 
-        /// <summary>
-        /// Process mouse up event
-        /// </summary>
-        /// <param name="currentEvent"></param>
         private void ProcessMouseUpEvent(Event currentEvent)
         {
             if (currentEvent.button == 1)
@@ -478,10 +407,6 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Process right mouse up event
-        /// </summary>
-        /// <param name="currentEvent"></param>
         private void ProcessRightMouseUpEvent(Event currentEvent)
         {
             if (currentNodeGraph.nodeToDrawLineFrom != null)
@@ -491,21 +416,12 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Process scroll wheel up event
-        /// </summary>
-        /// <param name="currentEvent"></param>
         private void ProcessScrollWheelUpEvent(Event currentEvent)
         {
             selectionRect = new Rect(0, 0, 0, 0);
             isScrollWheelDragging = false;
         }
 
-        /// <summary>
-        /// Process mouse drag event
-        /// </summary>
-        /// <param name="currentEvent"></param>
-        /// <exception cref="NotImplementedException"></exception>
         private void ProcessMouseDragEvent(Event currentEvent)
         {
             if (currentEvent.button == 0)
@@ -518,10 +434,6 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Process left mouse drag event
-        /// </summary>
-        /// <param name="currentEvent"></param>
         private void ProcessLeftMouseDragEvent(Event currentEvent)
         {
             SelectNodesBySelectionRect(currentEvent.mousePosition);
@@ -536,10 +448,6 @@ namespace cherrydev
             GUI.changed = true;
         }
 
-        /// <summary>
-        /// Process right mouse drag event
-        /// </summary>
-        /// <param name="currentEvent"></param>
         private void ProcessRightMouseDragEvent(Event currentEvent)
         {
             if (currentNodeGraph.nodeToDrawLineFrom != null)
@@ -549,19 +457,11 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Drag connecting line from the node
-        /// </summary>
-        /// <param name="delta"></param>
         private void DragConnectiongLine(Vector2 delta)
         {
             currentNodeGraph.linePosition += delta;
         }
 
-        /// <summary>
-        /// Check line connect when right mouse up
-        /// </summary>
-        /// <param name="currentEvent"></param>
         private void CheckLineConnection(Event currentEvent)
         {
             if (currentNodeGraph.nodeToDrawLineFrom != null)
@@ -575,10 +475,7 @@ namespace cherrydev
                 }
             }
         }
-
-        /// <summary>
-        /// Clear dragged line
-        /// </summary>
+        
         private void ClearDraggedLine()
         {
             currentNodeGraph.nodeToDrawLineFrom = null;
@@ -586,10 +483,7 @@ namespace cherrydev
             GUI.changed = true;
         }
 
-        /// <summary>
-        /// Process node selection, add to selected node list if node is selected
-        /// </summary>
-        /// <param name="mouseClickPosition"></param>
+
         private void ProcessNodeSelection(Vector2 mouseClickPosition)
         {
             Node clickedNode = GetHighlightedNode(mouseClickPosition);
@@ -609,10 +503,6 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Draw selection rect and select all node in it
-        /// </summary>
-        /// <param name="mousePosition"></param>
         private void SelectNodesBySelectionRect(Vector2 mousePosition)
         {
             if (!isScrollWheelDragging)
@@ -635,11 +525,6 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Return the node that is at the mouse position
-        /// </summary>
-        /// <param name="mousePosition"></param>
-        /// <returns></returns>
         private Node GetHighlightedNode(Vector2 mousePosition)
         {
             if (currentNodeGraph.nodesList.Count == 0)
@@ -661,10 +546,6 @@ namespace cherrydev
             return null;
         }
 
-        /// <summary>
-        /// Show the context menu
-        /// </summary>
-        /// <param name="mousePosition"></param>
         private void ShowContextMenu(Vector2 mousePosition)
         {
             GenericMenu contextMenu = new GenericMenu();
@@ -679,30 +560,17 @@ namespace cherrydev
             contextMenu.ShowAsContext();
         }
 
-        /// <summary>
-        /// Create Sentence Node at mouse position and add it to Node Graph asset
-        /// </summary>
-        /// <param name="mousePositionObject"></param>
         private void CreateSentenceNode(object mousePositionObject)
         {
             SentenceNode sentenceNode = ScriptableObject.CreateInstance<SentenceNode>();
             InitialiseNode(mousePositionObject, sentenceNode, "Sentence Node");
         }
 
-        /// <summary>
-        /// Create Answer Node at mouse position and add it to Node Graph asset
-        /// </summary>
-        /// <param name="mousePositionObject"></param>
         private void CreateAnswerNode(object mousePositionObject)
         {
             AnswerNode answerNode = ScriptableObject.CreateInstance<AnswerNode>();
             InitialiseNode(mousePositionObject, answerNode, "Answer Node");
         }
-
-        /// <summary>
-        /// Select all nodes in node editor
-        /// </summary>
-        /// <param name="userData"></param>
         private void SelectAllNodes(object userData)
         {
             foreach (Node node in currentNodeGraph.nodesList)
@@ -712,11 +580,6 @@ namespace cherrydev
 
             GUI.changed = true;
         }
-
-        /// <summary>
-        /// Remove all selected nodes
-        /// </summary>
-        /// <param name="userData"></param>
         private void RemoveSelectedNodes(object userData)
         {
             Queue<Node> nodeDeletionQueue = new Queue<Node>();
@@ -746,12 +609,6 @@ namespace cherrydev
             Repaint();
         }
 
-        /// <summary>
-        /// Create Node at mouse position and add it to Node Graph asset
-        /// </summary>
-        /// <param name="mousePositionObject"></param>
-        /// <param name="node"></param>
-        /// <param name="nodeName"></param>
         private void InitialiseNode(object mousePositionObject, Node node, string nodeName)
         {
             Vector2 mousePosition = (Vector2)mousePositionObject;
@@ -766,9 +623,9 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
+
         /// Chance current node graph and draw the new one
-        /// </summary>
+        
         private void ChangeEditorWindowOnSelection()
         {
             DialogNodeGraph nodeGraph = Selection.activeObject as DialogNodeGraph;
