@@ -10,7 +10,7 @@ namespace cherrydev
         [SerializeField] private Sentence sentence;
 
         [Space(10)]
-        public List<Node> parentNode;
+        public List<Node> parentNodes;
         public Node childNode;
 
         private string externalButtonLable;
@@ -169,7 +169,7 @@ namespace cherrydev
         }
 
         /// <summary>
-        /// Adding nodeToAdd Node to the parentNode field
+        /// Adding nodeToAdd Node to the parentNodes field
         /// </summary>
         /// <param name="nodeToAdd"></param>
         /// <returns></returns>
@@ -192,7 +192,10 @@ namespace cherrydev
                 }
             }
 
-            parentNode.Add(nodeToAdd);
+            if (parentNodes == null)
+                parentNodes = new List<Node>();
+
+            parentNodes.Add(nodeToAdd);
 
             if (nodeToAdd.GetType() == typeof(SentenceNode))
             {
@@ -204,11 +207,20 @@ namespace cherrydev
                 }
                 else
                 {
-                    parentNode.Remove(nodeToAdd);
+                    parentNodes.Remove(nodeToAdd);
                 }
             }
 
             return true;
+        }
+
+        public override void RemoveNodeFromParents(Node nodeToRemove)
+        {
+            foreach (Node n in parentNodes)
+            {
+                if (n == nodeToRemove)
+                    parentNodes.Remove(n);
+            }
         }
 
 #endif

@@ -5,7 +5,36 @@ using UnityEditor.Callbacks;
 using UnityEngine;
 
 namespace cherrydev
-{ 
+{
+    public class RenamePopup : PopupWindowContent
+    {
+        private Node node;
+        private string newName;
+
+        public RenamePopup(Node node)
+        {
+            this.node = node;
+            this.newName = node.name;
+        }
+
+        public override Vector2 GetWindowSize()
+        {
+            return new Vector2(200, 50);
+        }
+
+        public override void OnGUI(Rect rect)
+        {
+            EditorGUILayout.LabelField("Rename Node", EditorStyles.boldLabel);
+            newName = EditorGUILayout.TextField("New Name:", newName);
+
+            if (GUILayout.Button("Rename"))
+            {
+                node.Rename(newName);
+                editorWindow.Close();
+            }
+        }
+    }
+
     public class NodeEditor : EditorWindow
     {
         private static DialogNodeGraph currentNodeGraph;
@@ -165,7 +194,7 @@ namespace cherrydev
 
             foreach (Node node in currentNodeGraph.nodesList)
             {
-                Node parentNode = null;
+                Node parentNodes = null;
                 Node childNode = null;
 
                 if (node.GetType() == typeof(AnswerNode))
@@ -176,10 +205,10 @@ namespace cherrydev
                     {
                         if (answerNode.childSentenceNodes[i] != null)
                         {
-                            parentNode = node;
+                            parentNodes = node;
                             childNode = answerNode.childSentenceNodes[i];
 
-                            DrawConnectionLine(parentNode, childNode);
+                            DrawConnectionLine(parentNodes, childNode);
                         }
                     }
                 }
@@ -189,18 +218,18 @@ namespace cherrydev
 
                     if (sentenceNode.childNode != null)
                     {
-                        parentNode = node;
+                        parentNodes = node;
                         childNode = sentenceNode.childNode;
 
-                        DrawConnectionLine(parentNode, childNode);
+                        DrawConnectionLine(parentNodes, childNode);
                     }
                 }
             }
         }
 
-        private void DrawConnectionLine(Node parentNode, Node childNode)
+        private void DrawConnectionLine(Node parentNodes, Node childNode)
         {
-            Vector2 startPosition = parentNode.rect.center;
+            Vector2 startPosition = parentNodes.rect.center;
             Vector2 endPosition = childNode.rect.center;
 
             Vector2 midPosition = (startPosition + endPosition) / 2;
@@ -336,7 +365,6 @@ namespace cherrydev
                     SelectNodesBySelectionRect(currentEvent.mousePosition);
                     break;
                 case EventType.ScrollWheel:
-                    // Handle scroll wheel movement
                     HandleZoom(currentEvent);
                     break;
                 default:
@@ -378,10 +406,13 @@ namespace cherrydev
 
         private void ProcessRightMouseDownEvent(Event currentEvent)
         {
-            if (GetHighlightedNode(currentEvent.mousePosition) == null)
+            Node nodeUnderMouse = GetHighlightedNode(currentEvent.mousePosition);
+            if (nodeUnderMouse != null)
             {
-                ShowContextMenu(currentEvent.mousePosition);
+                // Select the node if not already selected
+                ProcessNodeSelection(currentEvent.mousePosition);
             }
+            ShowContextMenu(currentEvent.mousePosition);
         }
 
         private void ProcessLeftMouseDownEvent(Event currentEvent)
@@ -483,7 +514,6 @@ namespace cherrydev
             GUI.changed = true;
         }
 
-
         private void ProcessNodeSelection(Vector2 mouseClickPosition)
         {
             Node clickedNode = GetHighlightedNode(mouseClickPosition);
@@ -550,6 +580,7 @@ namespace cherrydev
         {
             GenericMenu contextMenu = new GenericMenu();
 
+            contextMenu.AddItem(new GUIContent("Rename Node"), false, () => BeginRenameNode(mousePosition));
             contextMenu.AddItem(new GUIContent("Create Sentence Node"), false, CreateSentenceNode, mousePosition);
             contextMenu.AddItem(new GUIContent("Create Answer Node"), false, CreateAnswerNode, mousePosition);
             contextMenu.AddSeparator("");
@@ -558,6 +589,15 @@ namespace cherrydev
             contextMenu.AddSeparator("");
             contextMenu.AddItem(new GUIContent("Reset"), false, Reset, mousePosition);
             contextMenu.ShowAsContext();
+        }
+
+        private void BeginRenameNode(Vector2 mousePosition)
+        {
+            Node selectedNode = GetHighlightedNode(mousePosition);
+            if (selectedNode != null)
+            {
+                PopupWindow.Show(new Rect(mousePosition, Vector2.zero), new RenamePopup(selectedNode));
+            }
         }
 
         private void CreateSentenceNode(object mousePositionObject)
@@ -595,6 +635,9 @@ namespace cherrydev
             while (nodeDeletionQueue.Count > 0)
             {
                 Node nodeTodelete = nodeDeletionQueue.Dequeue();
+
+                nodeTodelete.RemoveNodeFromParents(nodeTodelete);
+                nodeTodelete.RemoveNodeFromChilds(nodeTodelete);
 
                 currentNodeGraph.nodesList.Remove(nodeTodelete);
 

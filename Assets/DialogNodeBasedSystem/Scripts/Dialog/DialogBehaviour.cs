@@ -231,7 +231,7 @@ namespace cherrydev
                 {
                     SentenceNode sentenceNode = (SentenceNode)node;
 
-                    if (sentenceNode.parentNode == null && sentenceNode.childNode != null)
+                    if (sentenceNode.parentNodes == null && sentenceNode.childNode != null)
                     {
                         currentNode = sentenceNode;
 

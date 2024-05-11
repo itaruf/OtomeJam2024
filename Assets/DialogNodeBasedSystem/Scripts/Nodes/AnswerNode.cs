@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -149,7 +150,7 @@ namespace cherrydev
 
             if (childSentenceNodes.Count == answersData.Count)
             {
-                childSentenceNodes[answersData.Count - 1].parentNode = null;
+                childSentenceNodes[answersData.Count - 1].parentNodes = null;
                 childSentenceNodes.RemoveAt(answersData.Count - 1);
             }
 
@@ -226,7 +227,11 @@ namespace cherrydev
             if (IsCanAddToChildConnectedNode(sentenceNodeToAdd))
             {
                 childSentenceNodes.Add(sentenceNodeToAdd);
-                sentenceNodeToAdd.parentNode.Add(this);
+
+                if (sentenceNodeToAdd.parentNodes == null)
+                    sentenceNodeToAdd.parentNodes = new List<Node>();
+
+                sentenceNodeToAdd.parentNodes.Add(this);
 
                 return true;
             }
@@ -246,13 +251,37 @@ namespace cherrydev
 
         private bool IsCanAddToChildConnectedNode(SentenceNode sentenceNodeToAdd)
         {
-            if (sentenceNodeToAdd.parentNode == null && sentenceNodeToAdd.childNode != this /*&& childSentenceNodes.Count >= answersData.Count*/)
+            if (sentenceNodeToAdd.parentNodes == null && sentenceNodeToAdd.childNode != this /*&& childSentenceNodes.Count >= answersData.Count*/)
                 return true;
 
-            if (!sentenceNodeToAdd.parentNode.Contains(this) && sentenceNodeToAdd.childNode != this/* && childSentenceNodes.Count >= answersData.Count*/)
+            if (!sentenceNodeToAdd.parentNodes.Contains(this) && sentenceNodeToAdd.childNode != this/* && childSentenceNodes.Count >= answersData.Count*/)
                 return true;
 
             return false;
+        }
+
+        public override void RemoveNodeFromParents(Node nodeToRemove)
+        {
+            if (parentSentenceNode == null)
+                return;
+
+            foreach (SentenceNode sn in parentSentenceNode)
+            {
+                if (sn.childNode == nodeToRemove)
+                    sn.childNode = null;
+            }
+        }
+
+        public override void RemoveNodeFromChilds(Node nodeToRemove)
+        {
+            if (childSentenceNodes == null)
+                return;
+
+            foreach (SentenceNode sn in childSentenceNodes)
+            {
+                if (sn.parentNodes != null && sn.parentNodes.Contains(nodeToRemove))
+                    sn.parentNodes.Remove(nodeToRemove);
+            }
         }
 #endif
     }

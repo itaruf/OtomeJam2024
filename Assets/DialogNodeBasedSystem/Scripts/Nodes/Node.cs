@@ -131,6 +131,16 @@ namespace cherrydev
             this.name = newName;
             EditorUtility.SetDirty(this);  // Mark the node as dirty to ensure changes are saved
         }
+
+        virtual public void RemoveNodeFromParents(Node node)
+        {
+
+        }
+
+        virtual public void RemoveNodeFromChilds(Node nodeToRemove)
+        {
+
+        }
 #endif
     }
 }
