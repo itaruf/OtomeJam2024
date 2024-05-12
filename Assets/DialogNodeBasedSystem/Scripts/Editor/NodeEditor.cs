@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -6,35 +7,6 @@ using UnityEngine;
 
 namespace cherrydev
 {
-    public class RenamePopup : PopupWindowContent
-    {
-        private Node node;
-        private string newName;
-
-        public RenamePopup(Node node)
-        {
-            this.node = node;
-            this.newName = node.name;
-        }
-
-        public override Vector2 GetWindowSize()
-        {
-            return new Vector2(200, 50);
-        }
-
-        public override void OnGUI(Rect rect)
-        {
-            EditorGUILayout.LabelField("Rename Node", EditorStyles.boldLabel);
-            newName = EditorGUILayout.TextField("New Name:", newName);
-
-            if (GUILayout.Button("Rename"))
-            {
-                node.Rename(newName);
-                editorWindow.Close();
-            }
-        }
-    }
-
     public class NodeEditor : EditorWindow
     {
         private static DialogNodeGraph currentNodeGraph;
@@ -164,7 +136,6 @@ namespace cherrydev
                 if (node.GetType() == typeof(AnswerNode))
                 {
                     AnswerNode answerNode = (AnswerNode)node;
-                    answerNode.GenerateAnswerDataOnInitialization();
                     answerNode.CalculateAnswerNodeHeight();
                 }
                 if (node.GetType() == typeof(SentenceNode))
@@ -579,8 +550,6 @@ namespace cherrydev
         private void ShowContextMenu(Vector2 mousePosition)
         {
             GenericMenu contextMenu = new GenericMenu();
-
-            contextMenu.AddItem(new GUIContent("Rename Node"), false, () => BeginRenameNode(mousePosition));
             contextMenu.AddItem(new GUIContent("Create Sentence Node"), false, CreateSentenceNode, mousePosition);
             contextMenu.AddItem(new GUIContent("Create Answer Node"), false, CreateAnswerNode, mousePosition);
             contextMenu.AddSeparator("");
@@ -589,15 +558,6 @@ namespace cherrydev
             contextMenu.AddSeparator("");
             contextMenu.AddItem(new GUIContent("Reset"), false, Reset, mousePosition);
             contextMenu.ShowAsContext();
-        }
-
-        private void BeginRenameNode(Vector2 mousePosition)
-        {
-            Node selectedNode = GetHighlightedNode(mousePosition);
-            if (selectedNode != null)
-            {
-                PopupWindow.Show(new Rect(mousePosition, Vector2.zero), new RenamePopup(selectedNode));
-            }
         }
 
         private void CreateSentenceNode(object mousePositionObject)

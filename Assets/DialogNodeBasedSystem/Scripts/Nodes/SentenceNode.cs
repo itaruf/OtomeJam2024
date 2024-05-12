@@ -13,45 +13,26 @@ namespace cherrydev
         public List<Node> parentNodes;
         public Node childNode;
 
-        private string externalButtonLable;
-
-        private const float lableFieldSpace = 47f;
-        private const float textFieldWidth = 100f;
-
+        private const float lableFieldSpace = 40f;
+        private const float textFieldWidth = 107f;
+        private const float nodeNameFieldWith = 150f;
         private const float externalNodeHeight = 155f;
 
-        /// <summary>
-        /// Returning sentence character name
-        /// </summary>
-        /// <returns></returns>
         public string GetSentenceCharacterName()
         {
             return sentence.characterName;
         }
 
-        /// <summary>
-        /// Setting sentence text
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
         public void SetSentenceText(string text)
         {
             sentence.text = text;
         }
 
-        /// <summary>
-        /// Returning sentence text
-        /// </summary>
-        /// <returns></returns>
         public string GetSentenceText()
         {
             return sentence.text;
         }
 
-        /// <summary>
-        /// Returning sentence character sprite
-        /// </summary>
-        /// <returns></returns>
         public Sprite GetCharacterSprite()
         {
             return sentence.characterSprite;
@@ -59,46 +40,42 @@ namespace cherrydev
 
 #if UNITY_EDITOR
 
-        /// <summary>
-        /// Draw Sentence Node method
-        /// </summary>
-        /// <param name="nodeStyle"></param>
-        /// <param name="lableStyle"></param>
+        public override void Initialise(Rect rect, string nodeName, DialogNodeGraph nodeGraph)
+        {
+            base.Initialise(rect, nodeName, nodeGraph);
+            SetSentenceText("N/A");
+        }
+
         public override void Draw(GUIStyle nodeStyle, GUIStyle lableStyle)
         {
             base.Draw(nodeStyle, lableStyle);
 
             GUILayout.BeginArea(rect, nodeStyle);
 
-            EditorGUILayout.LabelField("Sentence Node", lableStyle);
-
+            DrawNodeNameFieldHorizontal();
+            GUILayout.Space(10);
             DrawCharacterNameFieldHorizontal();
             DrawSentenceTextFieldHorizontal();
             DrawCharacterSpriteHorizontal();
 
-            /*if (GUILayout.Button(externalButtonLable))
-            {
-                isExternalFunc = !isExternalFunc;
-
-            }*/
-
             GUILayout.EndArea();
         }
 
-        /// <summary>
-        /// Draw label and text fields for char name
-        /// </summary>
+        private void DrawNodeNameFieldHorizontal()
+        {
+            EditorGUILayout.BeginHorizontal();
+            NodeName = EditorGUILayout.TextField(NodeName, GUILayout.Width(nodeNameFieldWith));
+            EditorGUILayout.EndHorizontal();
+        }
+
         private void DrawCharacterNameFieldHorizontal()
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField($"Name ", GUILayout.Width(lableFieldSpace));
+            EditorGUILayout.LabelField($"Char ", GUILayout.Width(lableFieldSpace));
             sentence.characterName = EditorGUILayout.TextField(sentence.characterName, GUILayout.Width(textFieldWidth));
             EditorGUILayout.EndHorizontal();
         }
 
-        /// <summary>
-        /// Draw label and text fields for sentence text
-        /// </summary>
         private void DrawSentenceTextFieldHorizontal()
         {
             EditorGUILayout.BeginHorizontal();
@@ -107,39 +84,26 @@ namespace cherrydev
             EditorGUILayout.EndHorizontal();
         }
 
-        /// <summary>
-        /// Draw label and text fields for char sprite
-        /// </summary>
-        private void DrawCharacterSpriteHorizontal()
+        public override void DrawCharacterSpriteHorizontal()
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField($"Sprite ", GUILayout.Width(lableFieldSpace));
-            sentence.characterSprite = (Sprite)EditorGUILayout.ObjectField(sentence.characterSprite,
-                typeof(Sprite), false, GUILayout.Width(textFieldWidth));
+            sentence.characterSprite = (Sprite)EditorGUILayout.ObjectField(sentence.characterSprite, typeof(Sprite), false, GUILayout.Width(textFieldWidth));
             EditorGUILayout.EndHorizontal();
         }
 
-        /// <summary>
-        /// Checking node size
-        /// </summary>
-        /// <param name="rect"></param>
         public void CheckNodeSize(float width, float height)
-        {
-            rect.width = width;
+                {
+                    rect.width = width;
             
-            if (standartHeight == 0)
-            {
-                standartHeight = height;
-            }
+                    if (standartHeight == 0)
+                    {
+                        standartHeight = height;
+                    }
 
-            rect.height = standartHeight;
-        }
+                    rect.height = standartHeight;
+                }
 
-        /// <summary>
-        /// Adding nodeToAdd Node to the childNode field
-        /// </summary>
-        /// <param name="nodeToAdd"></param>
-        /// <returns></returns>
         public override bool AddToChildConnectedNode(Node nodeToAdd)
         {
             SentenceNode sentenceNodeToAdd;
@@ -168,11 +132,6 @@ namespace cherrydev
             return true;
         }
 
-        /// <summary>
-        /// Adding nodeToAdd Node to the parentNodes field
-        /// </summary>
-        /// <param name="nodeToAdd"></param>
-        /// <returns></returns>
         public override bool AddToParentConnectedNode(Node nodeToAdd)
         {
             SentenceNode sentenceNodeToAdd;
@@ -216,13 +175,15 @@ namespace cherrydev
 
         public override void RemoveNodeFromParents(Node nodeToRemove)
         {
+            if (parentNodes == null)
+                return;
+
             foreach (Node n in parentNodes)
             {
                 if (n == nodeToRemove)
                     parentNodes.Remove(n);
             }
         }
-
 #endif
     }
 }

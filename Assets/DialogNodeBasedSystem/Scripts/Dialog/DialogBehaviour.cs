@@ -186,9 +186,9 @@ namespace cherrydev
 
             for (int i = 0; i < answerNode.childSentenceNodes.Count; i++)
             {
-                if (answerNode.childSentenceNodes[i] != null)
+                if (answerNode.childSentenceNodes[i] != null && answerNode.AnswersData[i] != null)
                 {
-                    OnAnswerNodeSetUp?.Invoke(i, answerNode.answersData[i].dialogue);
+                    OnAnswerNodeSetUp?.Invoke(i, answerNode.AnswersData[i].dialogue);
                     OnAnswerButtonSetUp?.Invoke(i, answerNode);
 
                     amountOfActiveButtons++;
@@ -311,10 +311,10 @@ namespace cherrydev
                 {
                     AnswerNode answerNode = (AnswerNode)node;
 
-                    if (answerNode.Answers.Count > maxAmountOfAnswerButtons)
-                    {
+                    /*if (answerNode.Answers.Count > maxAmountOfAnswerButtons)
+                    {*/
                         maxAmountOfAnswerButtons = answerNode.Answers.Count;
-                    }
+                    /*}*/
                 }
             }
 

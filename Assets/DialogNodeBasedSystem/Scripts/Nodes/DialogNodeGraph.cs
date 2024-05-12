@@ -8,10 +8,16 @@ namespace cherrydev
     {
         public List<Node> nodesList = new List<Node>();
 
+        private int numberAnswerNodes = 0;
+        private int numberSequenceNodes = 0;
+
 #if UNITY_EDITOR
 
         [HideInInspector] public Node nodeToDrawLineFrom = null;
         [HideInInspector] public Vector2 linePosition = Vector2.zero;
+
+        public int NumberAnswerNodes { get => numberAnswerNodes; set => numberAnswerNodes = value; }
+        public int NumberSequenceNodes { get => numberSequenceNodes; set => numberSequenceNodes = value; }
 
         /// <summary>
         /// Assigning values to nodeToDrawLineFrom and linePosition fields

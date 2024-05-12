@@ -13,13 +13,18 @@ namespace cherrydev
         [HideInInspector] public bool isDragging;
         [HideInInspector] public bool isSelected;
 
+        [SerializeField] private string nodeName = "Node";
+
         protected float standartHeight;
+
+        public string NodeName { get { return nodeName; } set { nodeName = value; } }
 
 #if UNITY_EDITOR
 
         public virtual void Initialise(Rect rect, string nodeName, DialogNodeGraph nodeGraph)
         {
             name = nodeName;
+            this.nodeName = nodeName;
             standartHeight = rect.height;
             this.rect = rect;
             this.nodeGraph = nodeGraph;
@@ -27,6 +32,8 @@ namespace cherrydev
 
         public virtual void Draw(GUIStyle nodeStyle, GUIStyle lableStyle)
         { }
+
+        public virtual void DrawCharacterSpriteHorizontal() {}
 
         public virtual bool AddToParentConnectedNode(Node nodeToAdd)
         { return true; }
