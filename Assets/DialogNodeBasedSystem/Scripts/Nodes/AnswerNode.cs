@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace cherrydev
 {
@@ -23,7 +24,7 @@ namespace cherrydev
 
         private const float textFieldWidth = 120f;
         private const float lableSpriteFieldWidth = 107f;
-        private const float nodeNameFieldWith = 150f;
+        private const float nodeTypeFieldWith = 150f;
 
         private const float answerNodeWidth = 190f;
         private const float answerNodeHeight = 135f;
@@ -47,9 +48,9 @@ namespace cherrydev
 
 #if UNITY_EDITOR
 
-        public override void Initialise(Rect rect, string nodeName, DialogNodeGraph nodeGraph)
+        public override void Initialise(Rect rect, string nodeType, DialogNodeGraph nodeGraph)
         {
-            base.Initialise(rect, nodeName, nodeGraph);
+            base.Initialise(rect, nodeType, nodeGraph);
 
             GenerateInitialAnswer();
 
@@ -76,7 +77,9 @@ namespace cherrydev
 
             GUILayout.BeginArea(rect, nodeStyle);
 
-            DrawNodeNameFieldHorizontal();
+            DrawNodeTypeHorizontal();
+            DrawNodeTypeFieldHorizontal();
+
             GUILayout.Space(10);
 
             for (int i = 0; i < AnswersData.Count; ++i)
@@ -85,13 +88,6 @@ namespace cherrydev
             DrawAnswerNodeButtons();
             DrawCharacterSpriteHorizontal();
             GUILayout.EndArea();
-        }
-
-        private void DrawNodeNameFieldHorizontal()
-        {
-            EditorGUILayout.BeginHorizontal();
-            NodeName = EditorGUILayout.TextField(NodeName, GUILayout.Width(nodeNameFieldWith));
-            EditorGUILayout.EndHorizontal();
         }
 
         public override void DrawCharacterSpriteHorizontal()
@@ -107,7 +103,7 @@ namespace cherrydev
             if (answersData == null)
                 return;
 
-            if (Answers == null || Answers[answerNumber - 1] == null)
+            if (Answers == null)
                 return;
 
             if (Answers.Count > answersData.Count)
@@ -247,7 +243,7 @@ namespace cherrydev
         {
             currentAnswerNodeHeight = answerNodeHeight;
 
-            for (int i = 0; i < AnswersData.Count - 1; i++)
+            for (int i = 0; i < AnswersData.Count - 1; ++i)
             {
                 currentAnswerNodeHeight += additionalAnswerNodeHeight;
             }

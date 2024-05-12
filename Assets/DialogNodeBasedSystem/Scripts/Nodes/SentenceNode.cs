@@ -15,7 +15,6 @@ namespace cherrydev
 
         private const float lableFieldSpace = 40f;
         private const float textFieldWidth = 107f;
-        private const float nodeNameFieldWith = 150f;
         private const float externalNodeHeight = 155f;
 
         public string GetSentenceCharacterName()
@@ -40,9 +39,9 @@ namespace cherrydev
 
 #if UNITY_EDITOR
 
-        public override void Initialise(Rect rect, string nodeName, DialogNodeGraph nodeGraph)
+        public override void Initialise(Rect rect, string nodeType, DialogNodeGraph nodeGraph)
         {
-            base.Initialise(rect, nodeName, nodeGraph);
+            base.Initialise(rect, nodeType, nodeGraph);
             SetSentenceText("N/A");
         }
 
@@ -52,20 +51,16 @@ namespace cherrydev
 
             GUILayout.BeginArea(rect, nodeStyle);
 
-            DrawNodeNameFieldHorizontal();
+            DrawNodeTypeHorizontal();
+            DrawNodeTypeFieldHorizontal();
+
             GUILayout.Space(10);
+
             DrawCharacterNameFieldHorizontal();
             DrawSentenceTextFieldHorizontal();
             DrawCharacterSpriteHorizontal();
 
             GUILayout.EndArea();
-        }
-
-        private void DrawNodeNameFieldHorizontal()
-        {
-            EditorGUILayout.BeginHorizontal();
-            NodeName = EditorGUILayout.TextField(NodeName, GUILayout.Width(nodeNameFieldWith));
-            EditorGUILayout.EndHorizontal();
         }
 
         private void DrawCharacterNameFieldHorizontal()

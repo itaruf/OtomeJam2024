@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace cherrydev
 {
@@ -13,25 +14,51 @@ namespace cherrydev
         [HideInInspector] public bool isDragging;
         [HideInInspector] public bool isSelected;
 
-        [SerializeField] private string nodeName = "Node";
-
+        private string nodeType = "Node Type";
+        [SerializeField] private string nodeName = "Node Name";
         protected float standartHeight;
 
-        public string NodeName { get { return nodeName; } set { nodeName = value; } }
+        private const float nodeTypeFieldWith = 150f;
+
+        // Event Dispatchers
+        [SerializeField] private List<CustomEventDispatcher<UnityAction>> _EDI_OnNodeActivated;
+        [SerializeField] private List<CustomEventDispatcher<UnityAction>> _EDI_OnNodeDeactivated;
+
+        public string NodeType { get { return nodeType; } set { nodeType = value; } }
+        public string NodeName { get => nodeName; set => nodeName = value; }
+
+        public List<CustomEventDispatcher<UnityAction>> EDI_OnNodeActivated { get => _EDI_OnNodeActivated; set => _EDI_OnNodeActivated = value; }
+        public List<CustomEventDispatcher<UnityAction>> EDI_OnNodeDeactivated { get => _EDI_OnNodeDeactivated; set => _EDI_OnNodeDeactivated = value; }
 
 #if UNITY_EDITOR
 
-        public virtual void Initialise(Rect rect, string nodeName, DialogNodeGraph nodeGraph)
+        public virtual void Initialise(Rect rect, string nodeType, DialogNodeGraph nodeGraph)
         {
-            name = nodeName;
-            this.nodeName = nodeName;
+            name = nodeType;
             standartHeight = rect.height;
+            this.nodeType = nodeType;
             this.rect = rect;
             this.nodeGraph = nodeGraph;
         }
 
         public virtual void Draw(GUIStyle nodeStyle, GUIStyle lableStyle)
         { }
+
+        public virtual void DrawNodeTypeFieldHorizontal()
+        {
+            EditorGUILayout.BeginHorizontal();
+            NodeName = EditorGUILayout.TextField(NodeName, GUILayout.Width(nodeTypeFieldWith));
+            name = NodeName;
+            EditorGUILayout.EndHorizontal();
+        }
+
+        public virtual void DrawNodeTypeHorizontal()
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField(nodeType);
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(2.5f);
+        }
 
         public virtual void DrawCharacterSpriteHorizontal() {}
 

@@ -25,8 +25,7 @@ namespace cherrydev
         private bool isCurrentSentenceSkipped;
 
         public bool IsCanSkippingText
-        {
-            get
+        {   get
             {
                 return isCanSkippingText;
             }
@@ -37,21 +36,15 @@ namespace cherrydev
         }
 
         public event Action OnSentenceNodeActive;
-
         public event Action<string, string, Sprite> OnSentenceNodeActiveWithParameter;
 
         public event Action OnAnswerNodeActive;
-
         public event Action<int, AnswerNode> OnAnswerButtonSetUp;
-
         public event Action<int> OnMaxAmountOfAnswerButtonsCalculated;
-
         public event Action<int> OnAnswerNodeActiveWithParameter;
-
         public event Action<int, string> OnAnswerNodeSetUp;
 
         public event Action OnDialogTextCharWrote;
-
         public event Action<string> OnDialogTextSkipped;
 
         public DialogExternalFunctionsHandler ExternalFunctionsHandler { get; private set; }
@@ -66,28 +59,16 @@ namespace cherrydev
             HandleSentenceSkipping();
         }
 
-        /// <summary>
-        /// Setting dialogCharDelay float parameter
-        /// </summary>
-        /// <param name="value"></param>
         public void SetCharDelay(float value)
         {
             dialogCharDelay = value;
         }
 
-        /// <summary>
-        /// Setting nextSentenceKeyCodes
-        /// </summary>
-        /// <param name="keyCodes"></param>
         public void SetNextSentenceKeyCodes(List<KeyCode> keyCodes)
         {
             nextSentenceKeyCodes = keyCodes;
         }
 
-        /// <summary>
-        /// Start a dialog
-        /// </summary>
-        /// <param name="dialogNodeGraph"></param>
         public void StartDialog(DialogNodeGraph dialogNodeGraph)
         {
             isDialogStarted = true;
@@ -107,40 +88,22 @@ namespace cherrydev
             HandleDialogGraphCurrentNode(currentNode);
         }
 
-        /// <summary>
-        /// This method is designed for ease of use. Calls a method 
-        /// BindExternalFunction of the class DialogExternalFunctionsHandler
-        /// </summary>
-        /// <param name="funcName"></param>
-        /// <param name="function"></param>
         public void BindExternalFunction(string funcName, Action function)
         {
             ExternalFunctionsHandler.BindExternalFunction(funcName, function);
         }
 
-        /// <summary>
-        /// Adding listener to OnDialogFinished UnityEvent
-        /// </summary>
-        /// <param name="action"></param>
         public void AddListenerToDialogFinishedEvent(UnityAction action)
         {
             onDialogFinished.AddListener(action);
         }
 
-        /// <summary>
-        /// Setting currentNode field to Node and call HandleDialogGraphCurrentNode method
-        /// </summary>
-        /// <param name="node"></param>
         public void SetCurrentNodeAndHandleDialogGraph(Node node)
         {
             currentNode = node;
             HandleDialogGraphCurrentNode(this.currentNode);
         }
 
-        /// <summary>
-        /// Processing dialog current node
-        /// </summary>
-        /// <param name="currentNode"></param>
         private void HandleDialogGraphCurrentNode(Node currentNode)
         {
             StopAllCoroutines();
@@ -155,27 +118,23 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Processing sentence node
-        /// </summary>
-        /// <param name="currentNode"></param>
         private void HandleSentenceNode(Node currentNode)
         {
             SentenceNode sentenceNode = (SentenceNode)currentNode;
 
             isCurrentSentenceSkipped = false;
 
+            foreach (var evts in sentenceNode.EDI_OnNodeActivated)
+                evts.TriggerEvent(null);
+
             OnSentenceNodeActive?.Invoke();
+
             OnSentenceNodeActiveWithParameter?.Invoke(sentenceNode.GetSentenceCharacterName(), sentenceNode.GetSentenceText(),
                 sentenceNode.GetCharacterSprite());
 
             WriteDialogText(sentenceNode.GetSentenceText());
         }
 
-        /// <summary>
-        /// Processing answer node
-        /// </summary>
-        /// <param name="currentNode"></param>
         private void HandleAnswerNode(Node currentNode)
         {
             AnswerNode answerNode = (AnswerNode)currentNode;
@@ -184,7 +143,14 @@ namespace cherrydev
 
             OnAnswerNodeActive?.Invoke();
 
-            for (int i = 0; i < answerNode.childSentenceNodes.Count; i++)
+            foreach (var evts in answerNode.EDI_OnNodeActivated)
+                evts.TriggerEvent(null);
+            
+            foreach (var answer in answerNode.AnswersData) 
+                foreach (var e in answer.events)
+                    e.TriggerEvent(null);
+
+            for (int i = 0; i < answerNode.childSentenceNodes.Count; ++i)
             {
                 if (answerNode.childSentenceNodes[i] != null && answerNode.AnswersData[i] != null)
                 {
@@ -210,53 +176,22 @@ namespace cherrydev
             OnAnswerNodeActiveWithParameter?.Invoke(amountOfActiveButtons);
         }
 
-        /// <summary>
-        /// Finds the first node that does not have a parent node but has a child one
-        /// </summary>
-        /// <param name="dialogNodeGraph"></param>
         private void DefineFirstNode(DialogNodeGraph dialogNodeGraph)
         {
             if (dialogNodeGraph.nodesList.Count == 0)
             {
                 Debug.LogWarning("The list of nodes in the DialogNodeGraph is empty");
-
                 return;
-            }
-
-            foreach (Node node in dialogNodeGraph.nodesList)
-            {
-                currentNode = node;
-
-                if (node.GetType() == typeof(SentenceNode))
-                {
-                    SentenceNode sentenceNode = (SentenceNode)node;
-
-                    if (sentenceNode.parentNodes == null && sentenceNode.childNode != null)
-                    {
-                        currentNode = sentenceNode;
-
-                        return;
-                    }
-                }
             }
 
             currentNode = dialogNodeGraph.nodesList[0];
         }
 
-        /// <summary>
-        /// Writing dialog text
-        /// </summary>
-        /// <param name="text"></param>
         private void WriteDialogText(string text)
         {
             StartCoroutine(WriteDialogTextRoutine(text));
         }
 
-        /// <summary>
-        /// Writing dialog text coroutine
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
         private IEnumerator WriteDialogTextRoutine(string text)
         {
             foreach (char textChar in text)
@@ -277,11 +212,11 @@ namespace cherrydev
             CheckForDialogNextNode();
         }
 
-        /// <summary>
-        /// Checking is next dialog node has a child node
-        /// </summary>
         private void CheckForDialogNextNode()
         {
+            foreach (var events in currentNode.EDI_OnNodeDeactivated)
+                events.TriggerEvent(null);
+
             if (currentNode.GetType() == typeof(SentenceNode))
             {
                 SentenceNode sentenceNode = (SentenceNode)currentNode;
@@ -300,9 +235,6 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Calculate max amount of answer buttons
-        /// </summary>
         private void CalculateMaxAmountOfAnswerButtons()
         {
             foreach (Node node in currentNodeGraph.nodesList)
@@ -321,9 +253,6 @@ namespace cherrydev
             OnMaxAmountOfAnswerButtonsCalculated?.Invoke(maxAmountOfAnswerButtons);
         }
 
-        /// <summary>
-        /// Handles text skipping mechanics
-        /// </summary>
         private void HandleSentenceSkipping()
         {
             if (!isDialogStarted || !isCanSkippingText)
@@ -337,13 +266,9 @@ namespace cherrydev
             }
         }
 
-        /// <summary>
-        /// Checking whether at least one key from the nextSentenceKeyCodes was pressed
-        /// </summary>
-        /// <returns></returns>
         private bool CheckNextSentenceKeyCodes()
         {
-            for (int i = 0; i < nextSentenceKeyCodes.Count; i++)
+            for (int i = 0; i < nextSentenceKeyCodes.Count; ++i)
             { 
                 if (Input.GetKeyDown(nextSentenceKeyCodes[i]))
                 {

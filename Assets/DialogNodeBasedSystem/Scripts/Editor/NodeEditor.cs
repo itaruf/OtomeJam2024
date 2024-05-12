@@ -1,6 +1,8 @@
 using NUnit.Framework.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -32,6 +34,7 @@ namespace cherrydev
         private const int lableFontSize = 12;
 
         private const int nodePadding = 20;
+        private const int nodePaddingTop = 10;
         private const int nodeBorder = 10;
 
         private bool isScrollWheelDragging = false;
@@ -40,19 +43,19 @@ namespace cherrydev
         private const float zoomSpeed = 0.05f;
         private const float minZoom = 0.25f;
         private const float maxZoom = 3.0f;
-        
+
         private void OnEnable()
         {
             Selection.selectionChanged += ChangeEditorWindowOnSelection;
 
             nodeStyle = new GUIStyle();
             nodeStyle.normal.background = EditorGUIUtility.Load(StringConstants.Node) as Texture2D;
-            nodeStyle.padding = new RectOffset(nodePadding, nodePadding, nodePadding, nodePadding);
+            nodeStyle.padding = new RectOffset(nodePadding, nodePadding, nodePaddingTop, nodePadding);
             nodeStyle.border = new RectOffset(nodeBorder, nodeBorder, nodeBorder, nodeBorder);
 
             selectedNodeStyle = new GUIStyle();
             selectedNodeStyle.normal.background = EditorGUIUtility.Load(StringConstants.SelectedNode) as Texture2D;
-            selectedNodeStyle.padding = new RectOffset(nodePadding, nodePadding, nodePadding, nodePadding);
+            selectedNodeStyle.padding = new RectOffset(nodePadding, nodePadding, nodePaddingTop, nodePadding);
             selectedNodeStyle.border = new RectOffset(nodeBorder, nodeBorder, nodeBorder, nodeBorder);
 
             lableStyle = new GUIStyle();
@@ -60,7 +63,7 @@ namespace cherrydev
             lableStyle.fontSize = lableFontSize;
             lableStyle.normal.textColor = Color.white;
         }
-        
+
         private void OnDisable()
         {
             Selection.selectionChanged -= ChangeEditorWindowOnSelection;
@@ -97,7 +100,7 @@ namespace cherrydev
         {
             currentNodeGraph = nodeGraph;
         }
-        
+
         [MenuItem("Dialog Node Based Editor", menuItem = "Window/Dialog Node Based Editor")]
         public static void OpenWindow()
         {
@@ -106,7 +109,7 @@ namespace cherrydev
             window.Show();
 
         }
-        
+
         private void OnGUI()
         {
             // Start the zoom area
@@ -128,7 +131,7 @@ namespace cherrydev
             if (GUI.changed)
                 Repaint();
         }
-        
+
         private static void SetUpNodes()
         {
             foreach (Node node in currentNodeGraph.nodesList)
@@ -145,7 +148,7 @@ namespace cherrydev
                 }
             }
         }
-        
+
         private void DrawDraggedLine()
         {
             if (currentNodeGraph.linePosition != Vector2.zero)
@@ -274,7 +277,7 @@ namespace cherrydev
                 Handles.DrawLine(new Vector3(startX, lineY, 0), new Vector3(endX, lineY, 0));
             }
         }
-        
+
         private void DrawNodes()
         {
             if (currentNodeGraph.nodesList == null)
@@ -345,6 +348,8 @@ namespace cherrydev
 
         private void ProcessMouseDownEvent(Event currentEvent)
         {
+            GUI.FocusControl(null);
+
             if (currentEvent.button == 1)
             {
                 ProcessRightMouseDownEvent(currentEvent);
@@ -364,7 +369,7 @@ namespace cherrydev
             float oldZoom = zoomScale;
             zoomScale -= e.delta.y * zoomSpeed;
             zoomScale = Mathf.Clamp(zoomScale, minZoom, maxZoom);
-            
+
             // Adjust graph offset to keep the graph centered while zooming
             if (Mathf.Abs(zoomScale - oldZoom) > 0.01f)
             {
@@ -377,6 +382,8 @@ namespace cherrydev
 
         private void ProcessRightMouseDownEvent(Event currentEvent)
         {
+            ProcessScrollWheelUpEvent(currentEvent);
+
             Node nodeUnderMouse = GetHighlightedNode(currentEvent.mousePosition);
             if (nodeUnderMouse != null)
             {
@@ -388,6 +395,7 @@ namespace cherrydev
 
         private void ProcessLeftMouseDownEvent(Event currentEvent)
         {
+            ProcessScrollWheelUpEvent(currentEvent);
             ProcessNodeSelection(currentEvent.mousePosition);
         }
 
@@ -452,11 +460,20 @@ namespace cherrydev
 
         private void ProcessRightMouseDragEvent(Event currentEvent)
         {
+            graphDrag = currentEvent.delta;
+
+            foreach (var node in currentNodeGraph.nodesList)
+            {
+                if (node.isSelected)
+                    node.DragNode(graphDrag);
+            }
+            
             if (currentNodeGraph.nodeToDrawLineFrom != null)
             {
                 DragConnectiongLine(currentEvent.delta);
-                GUI.changed = true;
             }
+
+            GUI.changed = true;
         }
 
         private void DragConnectiongLine(Vector2 delta)
@@ -477,7 +494,7 @@ namespace cherrydev
                 }
             }
         }
-        
+
         private void ClearDraggedLine()
         {
             currentNodeGraph.nodeToDrawLineFrom = null;
@@ -557,6 +574,7 @@ namespace cherrydev
             contextMenu.AddItem(new GUIContent("Remove Selected Nodes"), false, RemoveSelectedNodes, mousePosition);
             contextMenu.AddSeparator("");
             contextMenu.AddItem(new GUIContent("Reset"), false, Reset, mousePosition);
+           /* contextMenu.AddItem(new GUIContent("Delete"), false, (value) => { DeleteDuplicateNodesExceptOne(); }, mousePosition);*/
             contextMenu.ShowAsContext();
         }
 
@@ -612,11 +630,11 @@ namespace cherrydev
             Repaint();
         }
 
-        private void InitialiseNode(object mousePositionObject, Node node, string nodeName)
+        private void InitialiseNode(object mousePositionObject, Node node, string nodeType)
         {
             Vector2 mousePosition = (Vector2)mousePositionObject;
 
-            node.Initialise(new Rect(mousePosition, new Vector2(nodeWidth, nodeHeight)), nodeName, currentNodeGraph);
+            node.Initialise(new Rect(mousePosition, new Vector2(nodeWidth, nodeHeight)), nodeType, currentNodeGraph);
             currentNodeGraph.nodesList.Add(node);
 
             if (!AssetDatabase.Contains(node))
@@ -626,9 +644,8 @@ namespace cherrydev
             }
         }
 
-
         /// Chance current node graph and draw the new one
-        
+
         private void ChangeEditorWindowOnSelection()
         {
             DialogNodeGraph nodeGraph = Selection.activeObject as DialogNodeGraph;
@@ -638,6 +655,28 @@ namespace cherrydev
                 currentNodeGraph = nodeGraph;
                 GUI.changed = true;
             }
+        }
+
+        private void DeleteDuplicateNodesExceptOne()
+        {
+            // Retrieve all assets linked to currentNodeGraph.
+            var allAssets = AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(currentNodeGraph));
+
+            foreach (var asset in allAssets)
+            {
+                // Ensure the asset is not the currentNodeGraph itself.
+                if (asset != currentNodeGraph)
+                {
+                    // Remove each child asset from the AssetDatabase.
+                    if (AssetDatabase.Contains(asset))
+                    {
+                        AssetDatabase.RemoveObjectFromAsset(asset);
+                    }
+                }
+            }
+
+            // Save changes to the AssetDatabase.
+            AssetDatabase.SaveAssets();
         }
     }
 }
