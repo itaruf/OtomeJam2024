@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9057112416308334179
+--- !u!114 &-5379452613177203053
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,55 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
+  m_Name: Racaille follow
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
   rect:
     serializedVersion: 2
-    x: 290.90906
-    y: 949.09125
+    x: 531.05804
+    y: 436.87753
     width: 190
     height: 135
   isDragging: 0
   isSelected: 0
+  nodeName: Racaille follow
+  _EDI_OnNodeActivated: []
+  _EDI_OnNodeDeactivated: []
   sentence:
-    characterName: racaille
-    text: PII
-    characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode:
-  - {fileID: 7415125028608286062}
-  childNode: {fileID: 0}
---- !u!114 &-7487669236552120907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
-  m_EditorClassIdentifier: 
-  connectedNodesList: []
-  nodeGraph: {fileID: 11400000}
-  rect:
-    serializedVersion: 2
-    x: 569.0909
-    y: 954.54584
-    width: 190
-    height: 135
-  isDragging: 0
-  isSelected: 0
-  sentence:
-    characterName: racaille
-    text: t'es mmort
-    characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode:
-  - {fileID: 7415125028608286062}
-  childNode: {fileID: 0}
---- !u!114 &-5277142479957657812
+    characterName: RacailleR
+    text: N/A
+    characterSprite: {fileID: 0}
+  parentNodes:
+  - {fileID: -2389552448621953689}
+  childNode: {fileID: 2131078939244633295}
+--- !u!114 &-2389552448621953689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,142 +42,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1717f3c6dba9fa40844ddacac301510, type: 3}
-  m_Name: Answer Node
+  m_Name: dzaada
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
   rect:
     serializedVersion: 2
-    x: 575.0647
-    y: 169.87024
+    x: 698.2469
+    y: 202.63754
     width: 190
-    height: 135
+    height: 155
   isDragging: 0
   isSelected: 0
-  characterName: MC
-  characterSprite: {fileID: 0}
+  nodeName: dzaada
+  _EDI_OnNodeActivated: []
+  _EDI_OnNodeDeactivated: []
+  answer:
+    characterName: 
+    characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
   answersData:
   - {fileID: 11400000, guid: 0eb330626648d054f9bb206fd210f408, type: 2}
   - {fileID: 11400000, guid: 0aa8ba1e511655e42b4d943adae56b4b, type: 2}
   parentSentenceNode:
-  - {fileID: -396916628701435289}
+  - {fileID: 4520410933534325797}
   childSentenceNodes:
-  - {fileID: -2415236170423815469}
-  - {fileID: -7487669236552120907}
---- !u!114 &-2759962787471094317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1717f3c6dba9fa40844ddacac301510, type: 3}
-  m_Name: Answer Node
-  m_EditorClassIdentifier: 
-  connectedNodesList: []
-  nodeGraph: {fileID: 11400000}
-  rect:
-    serializedVersion: 2
-    x: 881.8181
-    y: 494.5453
-    width: 190
-    height: 115
-  isDragging: 0
-  isSelected: 0
-  characterName: MC
-  characterSprite: {fileID: 0}
-  answersData:
-  - {fileID: 0}
-  parentSentenceNode:
-  - {fileID: 3278734711004001508}
-  childSentenceNodes: []
---- !u!114 &-2415236170423815469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
-  m_EditorClassIdentifier: 
-  connectedNodesList: []
-  nodeGraph: {fileID: 11400000}
-  rect:
-    serializedVersion: 2
-    x: 426.36353
-    y: 389.35065
-    width: 190
-    height: 135
-  isDragging: 0
-  isSelected: 0
-  sentence:
-    characterName: racaillle
-    text: pi?
-    characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode:
-  - {fileID: -5277142479957657812}
-  childNode: {fileID: 7415125028608286062}
---- !u!114 &-1849048845790033447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
-  m_EditorClassIdentifier: 
-  connectedNodesList: []
-  nodeGraph: {fileID: 11400000}
-  rect:
-    serializedVersion: 2
-    x: 867.27264
-    y: 701.8181
-    width: 190
-    height: 135
-  isDragging: 0
-  isSelected: 0
-  sentence:
-    characterName: 
-    text: 
-    characterSprite: {fileID: 0}
-  parentNode: []
-  childNode: {fileID: 0}
---- !u!114 &-396916628701435289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
-  m_EditorClassIdentifier: 
-  connectedNodesList: []
-  nodeGraph: {fileID: 11400000}
-  rect:
-    serializedVersion: 2
-    x: 574.5455
-    y: -61.8183
-    width: 190
-    height: 135
-  isDragging: 0
-  isSelected: 0
-  sentence:
-    characterName: racaillle
-    text: ta gueule
-    characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode: []
-  childNode: {fileID: -5277142479957657812}
+  - {fileID: -5379452613177203053}
+  - {fileID: 2131078939244633295}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,15 +81,13 @@ MonoBehaviour:
   m_Name: New Node Graph
   m_EditorClassIdentifier: 
   nodesList:
-  - {fileID: -396916628701435289}
-  - {fileID: -5277142479957657812}
-  - {fileID: -2415236170423815469}
-  - {fileID: 7415125028608286062}
-  - {fileID: -9057112416308334179}
-  - {fileID: -7487669236552120907}
+  - {fileID: 4520410933534325797}
+  - {fileID: -2389552448621953689}
+  - {fileID: -5379452613177203053}
+  - {fileID: 2131078939244633295}
   nodeToDrawLineFrom: {fileID: 0}
   linePosition: {x: 0, y: 0}
---- !u!114 &3278734711004001508
+--- !u!114 &2131078939244633295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,25 +97,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
+  m_Name: Node Name
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
   rect:
     serializedVersion: 2
-    x: 878.1817
-    y: 261.818
+    x: 840.3253
+    y: 432.3703
     width: 190
     height: 135
   isDragging: 0
   isSelected: 0
+  nodeName: Node Name
+  _EDI_OnNodeActivated: []
+  _EDI_OnNodeDeactivated: []
   sentence:
-    characterName: 
-    text: 
+    characterName: Racaille
+    text: N/A
     characterSprite: {fileID: 0}
-  parentNode: []
-  childNode: {fileID: -2759962787471094317}
---- !u!114 &7415125028608286062
+  parentNodes:
+  - {fileID: -5379452613177203053}
+  - {fileID: -2389552448621953689}
+  childNode: {fileID: 0}
+--- !u!114 &4520410933534325797
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -262,26 +129,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1717f3c6dba9fa40844ddacac301510, type: 3}
-  m_Name: Answer Node
+  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
+  m_Name: Start
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
   rect:
     serializedVersion: 2
-    x: 418.18195
-    y: 674.5452
+    x: 719.4157
+    y: -26.460953
     width: 190
     height: 135
   isDragging: 0
   isSelected: 0
-  characterName: MC
-  characterSprite: {fileID: 0}
-  answersData:
-  - {fileID: 11400000, guid: ead071427c4013f46899d36b325c33ec, type: 2}
-  - {fileID: 11400000, guid: cacf417b8beed9d469f6567506bfe573, type: 2}
-  parentSentenceNode:
-  - {fileID: -2415236170423815469}
-  childSentenceNodes:
-  - {fileID: -9057112416308334179}
-  - {fileID: -7487669236552120907}
+  nodeName: Start
+  _EDI_OnNodeActivated:
+  - {fileID: 11400000, guid: 2084d9e31e102cb4687af787c5c233c2, type: 2}
+  _EDI_OnNodeDeactivated:
+  - {fileID: 11400000, guid: 2084d9e31e102cb4687af787c5c233c2, type: 2}
+  sentence:
+    characterName: Racaille
+    text: N/A
+    characterSprite: {fileID: 0}
+  parentNodes: []
+  childNode: {fileID: -2389552448621953689}

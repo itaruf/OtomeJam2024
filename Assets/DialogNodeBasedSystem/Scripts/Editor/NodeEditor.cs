@@ -533,7 +533,6 @@ namespace cherrydev
 
             EditorGUI.DrawRect(selectionRect, new Color(0, 0, 0, 0.5f));
 
-
             foreach (Node node in currentNodeGraph.nodesList)
             {
                 if (selectionRect.Contains(node.rect.position))

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
+  m_Name: S. Node
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
@@ -22,14 +22,13 @@ MonoBehaviour:
     height: 135
   isDragging: 0
   isSelected: 0
+  nodeName: Node
   sentence:
     characterName: cherrydev
     text: First sentence
     characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode: {fileID: 4936782135289953885}
+  parentNodes: []
   childNode: {fileID: -7841181008643086002}
-  isExternalFunc: 0
-  externalFunctionName: 
 --- !u!114 &-8455854530336412942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40,7 +39,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
+  m_Name: S. Node
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
@@ -52,14 +51,13 @@ MonoBehaviour:
     height: 135
   isDragging: 0
   isSelected: 0
+  nodeName: Node
   sentence:
     characterName: cherrydev
     text: Last sentence
     characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode: {fileID: 0}
+  parentNodes: []
   childNode: {fileID: 0}
-  isExternalFunc: 0
-  externalFunctionName: 
 --- !u!114 &-7841181008643086002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +68,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
+  m_Name: S. Node
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
@@ -82,14 +80,13 @@ MonoBehaviour:
     height: 135
   isDragging: 0
   isSelected: 0
+  nodeName: Node
   sentence:
     characterName: cherrydev
     text: Next to first sentence
     characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode: {fileID: -8705819208441359274}
+  parentNodes: []
   childNode: {fileID: 4411136173186865135}
-  isExternalFunc: 0
-  externalFunctionName: 
 --- !u!114 &-6005459696232394752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,7 +97,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
+  m_Name: S. Node
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
@@ -112,14 +109,13 @@ MonoBehaviour:
     height: 135
   isDragging: 0
   isSelected: 0
+  nodeName: Node
   sentence:
     characterName: cherrydev
     text: Next to third sentence
     characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode: {fileID: 8776957959574132249}
+  parentNodes: []
   childNode: {fileID: 4411136173186865135}
-  isExternalFunc: 0
-  externalFunctionName: 
 --- !u!114 &-5184584624021453599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,7 +126,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
+  m_Name: S. Node
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
@@ -142,14 +138,13 @@ MonoBehaviour:
     height: 135
   isDragging: 0
   isSelected: 0
+  nodeName: Node
   sentence:
     characterName: cherrydev
     text: Second sentence
     characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode: {fileID: 4936782135289953885}
+  parentNodes: []
   childNode: {fileID: 4978805031079437192}
-  isExternalFunc: 0
-  externalFunctionName: 
 --- !u!114 &-2790696347262530497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +155,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
+  m_Name: S. Node
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
@@ -172,14 +167,13 @@ MonoBehaviour:
     height: 155
   isDragging: 0
   isSelected: 0
+  nodeName: Node
   sentence:
     characterName: cherrydev
     text: Hello, this is Dialog Node Based System
     characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode: {fileID: 0}
+  parentNodes: []
   childNode: {fileID: 4936782135289953885}
-  isExternalFunc: 1
-  externalFunctionName: Test
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +212,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
+  m_Name: S. Node
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
@@ -230,14 +224,13 @@ MonoBehaviour:
     height: 135
   isDragging: 0
   isSelected: 0
+  nodeName: Node
   sentence:
     characterName: cherrydev
     text: Next to fourth sentence
     characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode: {fileID: 3563645847101711405}
+  parentNodes: []
   childNode: {fileID: 4411136173186865135}
-  isExternalFunc: 0
-  externalFunctionName: 
 --- !u!114 &1175716626248544139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,7 +241,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
+  m_Name: S. Node
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
@@ -260,14 +253,13 @@ MonoBehaviour:
     height: 135
   isDragging: 0
   isSelected: 0
+  nodeName: Node
   sentence:
     characterName: cherrydev
     text: Last sentence
     characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode: {fileID: 4411136173186865135}
+  parentNodes: []
   childNode: {fileID: 0}
-  isExternalFunc: 0
-  externalFunctionName: 
 --- !u!114 &3563645847101711405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,7 +270,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
+  m_Name: S. Node
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
@@ -290,14 +282,13 @@ MonoBehaviour:
     height: 135
   isDragging: 0
   isSelected: 0
+  nodeName: Node
   sentence:
     characterName: cherrydev
     text: Fourth sentence
     characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode: {fileID: 4936782135289953885}
+  parentNodes: []
   childNode: {fileID: 548517801765535934}
-  isExternalFunc: 0
-  externalFunctionName: 
 --- !u!114 &4411136173186865135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,7 +299,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1717f3c6dba9fa40844ddacac301510, type: 3}
-  m_Name: Answer Node
+  m_Name: A. Node
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
@@ -317,13 +308,16 @@ MonoBehaviour:
     x: 1062.4287
     y: 278.62863
     width: 190
-    height: 115
+    height: 135
   isDragging: 0
   isSelected: 0
-  characterName: MC
-  characterSprite: {fileID: 0}
+  nodeName: Node
+  answer:
+    characterName: 
+    characterSprite: {fileID: 0}
   answersData: []
-  parentSentenceNode: {fileID: 548517801765535934}
+  parentSentenceNode:
+  - {fileID: 0}
   childSentenceNodes:
   - {fileID: 1175716626248544139}
 --- !u!114 &4936782135289953885
@@ -336,7 +330,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1717f3c6dba9fa40844ddacac301510, type: 3}
-  m_Name: Answer Node
+  m_Name: A. Node
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
@@ -345,15 +339,18 @@ MonoBehaviour:
     x: 258.9999
     y: 200.05719
     width: 190
-    height: 155
+    height: 175
   isDragging: 0
   isSelected: 0
-  characterName: MC
-  characterSprite: {fileID: 0}
+  nodeName: Node
+  answer:
+    characterName: 
+    characterSprite: {fileID: 0}
   answersData:
   - {fileID: 11400000, guid: 0eb330626648d054f9bb206fd210f408, type: 2}
   - {fileID: 11400000, guid: 0aa8ba1e511655e42b4d943adae56b4b, type: 2}
-  parentSentenceNode: {fileID: 0}
+  parentSentenceNode:
+  - {fileID: 0}
   childSentenceNodes:
   - {fileID: -8705819208441359274}
   - {fileID: -5184584624021453599}
@@ -369,7 +366,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
+  m_Name: S. Node
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
@@ -381,14 +378,13 @@ MonoBehaviour:
     height: 135
   isDragging: 0
   isSelected: 0
+  nodeName: Node
   sentence:
     characterName: cherrydev
     text: Next to second sentence
     characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode: {fileID: -5184584624021453599}
+  parentNodes: []
   childNode: {fileID: 4411136173186865135}
-  isExternalFunc: 0
-  externalFunctionName: 
 --- !u!114 &8776957959574132249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,7 +395,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
-  m_Name: Sentence Node
+  m_Name: S. Node
   m_EditorClassIdentifier: 
   connectedNodesList: []
   nodeGraph: {fileID: 11400000}
@@ -411,11 +407,10 @@ MonoBehaviour:
     height: 135
   isDragging: 0
   isSelected: 0
+  nodeName: Node
   sentence:
     characterName: cherrydev
     text: Third sentence
     characterSprite: {fileID: 21300000, guid: c03d0e70107745d48b9cc5f2abe74fe5, type: 3}
-  parentNode: {fileID: 4936782135289953885}
+  parentNodes: []
   childNode: {fileID: -6005459696232394752}
-  isExternalFunc: 0
-  externalFunctionName: 
